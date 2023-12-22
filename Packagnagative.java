@@ -1,6 +1,6 @@
 
 import org.openqa.selenium.WebDriver;            
-import org.openqa.selenium.chrome.ChromeDriver;   
+//import org.openqa.selenium.chrome.ChromeDriver;   
 import org.openqa.selenium.By;                    
                           
 
@@ -25,12 +25,12 @@ public class Packagnagative {
         }
     }
 
-    public static void setupDriver() {
-       System.setProperty("webdriver.chrome.driver", "E:\\JavaP3\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("https://lottosonline.thefamcomlab.com");
-        driver.manage().window().maximize();
-     }
+    // public static void setupDriver() {
+    //    System.setProperty("webdriver.chrome.driver", "E:\\JavaP3\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
+    //     driver = new ChromeDriver();
+    //     driver.get("https://lottosonline.thefamcomlab.com");
+    //     driver.manage().window().maximize();
+    //  }
     public static void blanksave()
     {
         driver.findElement(By.partialLinkText("Create Package")).click();

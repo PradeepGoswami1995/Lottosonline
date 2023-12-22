@@ -10,7 +10,7 @@ import org.openqa.selenium.OutputType;            // Enum defining the type of o
 import org.openqa.selenium.TakesScreenshot;       // Interface allowing WebDriver to capture screenshots
 import javax.swing.JOptionPane;                  // Class used for showing standard dialogs (like pop-up messages)
 import java.util.concurrent.TimeUnit;             // Enum defining time units (e.g., seconds, minutes)
-import java.io.File;                              // Class representing file and directory path names
+import java.io.File;                                  // Class representing file and directory path names
 import java.io.IOException;                       // Exception thrown when IO operations fail or are interrupted
 import java.text.SimpleDateFormat;                 // Class used to format dates into text and parse text into dates
 import java.util.Date;                            // Class representing a specific instant in time
@@ -24,9 +24,9 @@ public class Package {
             setupDriver();
             adminlogin();
             navigatingpackage();
-            createPackage();
-            createpromopacage();
-            editPackage();
+           createPackage();
+           createpromopacage();
+           editPackage();
             sorting();
         } catch (Exception e) {
             handleError(e);
@@ -51,7 +51,7 @@ public class Package {
        
 
     public static void setupDriver() {
-        System.setProperty("webdriver.chrome.driver", "E:\\JavaP3\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://lottosonline.thefamcomlab.com");
         driver.manage().window().maximize();
@@ -229,12 +229,15 @@ public class Package {
          sleep(5);
          
          //driver.findElement(By.xpath("//*[@id=\"fromdate\"]/option[@value='" + currentDate + "']")).click();
-         driver.findElement(By.id("fromdate")).sendKeys("currentDate");
+         driver.findElement(By.id("fromdate")).sendKeys(currentDate);
+        // driver.findElement(By.id("fromdate")).sendKeys("currentDate");
          //driver.findElement(By.linkText("26")).click();
 
 
-         driver.findElement(By.cssSelector("tr:nth-child(11) #uniform-undefined input")).click();
-    driver.findElement(By.cssSelector(".lucky_diprow #uniform-undefined input")).click();
+    // driver.findElement(By.cssSelector("tr:nth-child(11) #uniform-undefined input")).click();
+    //  driver.findElement(By.cssSelector(".lucky_diprow #uniform-undefined input")).click();
+     driver.findElement(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]")).click();
+    driver.findElement(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]")).click();
 
          
          // Continue with the rest of your code

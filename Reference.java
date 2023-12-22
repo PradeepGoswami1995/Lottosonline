@@ -20,6 +20,11 @@ public class Reference {
     private static WebDriver driver;
 
     public static void main(String[] args) {
+        setupDriver();
+        Adminlogin();
+        //setupDriver();
+        Syndicatelogin();
+
     }
 
     public static void handleError(Exception e) {
@@ -53,7 +58,7 @@ public class Reference {
     }
 
      public static void Adminlogin() {
-        clickAndWait(By.linkText("Login"), 3);
+        clickAndWait(By.linkText("Login"), 1);
         
         driver.findElement(By.id("email")).sendKeys("pradeepadmin@yopmail.com");
         driver.findElement(By.id("password")).sendKeys("famcom");
