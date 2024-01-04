@@ -74,7 +74,7 @@ public class Reference {
         driver.findElement(By.id("password")).sendKeys("famcom");
         driver.findElement(By.id("submit_button")).click();
 
-        sleep(5);
+        sleep(2);     
     }
 
 
@@ -115,6 +115,15 @@ public class Reference {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+     public static void PMlogin() {
+        clickAndWait(By.linkText("Login"), 3);
+        
+        driver.findElement(By.id("email")).sendKeys("iampradeepgoswami@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("famcom");
+        driver.findElement(By.id("submit_button")).click();
+        sleep(2);     
     }
 
     }
