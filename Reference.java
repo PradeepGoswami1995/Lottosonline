@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;             // Enum defining time units (e
 import java.io.File;                              // Class representing file and directory path names
 import java.io.IOException;                       // Exception thrown when IO operations fail or are interrupted
 import java.text.SimpleDateFormat;                 // Class used to format dates into text and parse text into dates
-import java.util.Date;                            // Class representing a specific instant in time
+import java.util.Date;                           // Class representing a specific instant in time                      
 
 
 public class Reference {
@@ -126,7 +126,12 @@ public class Reference {
         sleep(2);     
     }
 
+    public static void Massage(String Massage ){ 
+        JOptionPane.showMessageDialog(null, Massage, "Success", JOptionPane.INFORMATION_MESSAGE);
     }
+}
+
+    
 
         
 

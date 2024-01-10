@@ -13,6 +13,7 @@ public class TransferToPM {
     private static WebDriver driver;
 
     public static void main(String[] args) {
+
         TransferToCustomer.Setdriver();
         TransferToCustomer.openLottosSite();
         TransferToCustomer.Adminlogin();
@@ -69,8 +70,12 @@ public class TransferToPM {
 
          driver.findElement(By.id("submit_button")).click();
 
+         Reference.Massage("Transfered to PM successfully");
+
          Reference.sleep(5);
          Reference.PMlogin();
+
+
     }
 
 }

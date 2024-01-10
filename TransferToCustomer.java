@@ -2,21 +2,23 @@
 // This Script using to test the transfer to customer and purchase ticket by customer
 
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JOptionPane;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 //import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-//import java.util.concurrent.TimeUnit;
 
 public class TransferToCustomer{
     private static WebDriver driver;
 
-
     public static void main(String[] args) {
 
         try {
+        
         Setdriver();
         openLottosSite();
         Adminlogin();
@@ -31,8 +33,8 @@ public class TransferToCustomer{
         
         }
     }
-    }
     
+    }
     public static void Setdriver()
     {
         System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
@@ -53,7 +55,9 @@ public class TransferToCustomer{
        sleep(2);
     }
 
-    public static void AdminTransferCustomer() {
+
+    public static void AdminTransferCustomer()
+     {
         // Click on the "Customer List" link
         driver.findElement(By.xpath("//a[contains(@href,'customer_search')]")).click();
     sleep(2);
@@ -106,6 +110,8 @@ public class TransferToCustomer{
                
         sleep(2);
 
+        Message("Item transftered to customer");
+
         //purchase by customer
         
             driver.findElement(By.linkText("Login")).click();
@@ -131,6 +137,8 @@ public class TransferToCustomer{
        // driver.findElement(By.tagName("Logout")).click();
         sleep(5);
 
+        Message("Order Placed successfully by customer");
+
     }
 
     public static void sleep(int seconds) {
@@ -141,6 +149,9 @@ public class TransferToCustomer{
         }
     }
 
-    
+    public static void Message(String Message){
+        JOptionPane.showMessageDialog(null, driver, Message , 0);
+    }
 
+    
 }
