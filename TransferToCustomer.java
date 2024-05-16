@@ -102,6 +102,7 @@ public class TransferToCustomer{
         // Transfer to customer
         //driver.findElement(By.tagName("Transfer to Customer")).click();
         driver.findElement(By.xpath("//*[@id='card_details_container']/div[2]/a[2]")).click();
+
         sleep(2);
 
         // logout
@@ -152,6 +153,7 @@ public class TransferToCustomer{
     public static void Message(String Message){
         JOptionPane.showMessageDialog(null, driver, Message , 0);
     }
+
 
     
 }

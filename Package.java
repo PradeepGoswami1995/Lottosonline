@@ -50,7 +50,9 @@ public class Package {
     //... [Rest of your code remains unchanged]
        
 
-    public static void setupDriver() {
+    
+    public static void setupDriver() 
+    {
         System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://lottosonline.thefamcomlab.com");

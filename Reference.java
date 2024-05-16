@@ -118,7 +118,8 @@ public class Reference {
     }
 
      public static void PMlogin() {
-        clickAndWait(By.linkText("Login"), 3);
+        driver.findElement(By.linkText("Login")).click();
+        //clickAndWait(By.linkText("Login"), 3);
         
         driver.findElement(By.id("email")).sendKeys("iampradeepgoswami@gmail.com");
         driver.findElement(By.id("password")).sendKeys("famcom");

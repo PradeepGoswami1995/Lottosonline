@@ -9,6 +9,7 @@ class A {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the value of a: ");
+        
         int a = scanner.nextInt();
 
         System.out.print("Enter the value of b: ");
