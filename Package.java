@@ -230,14 +230,10 @@ public class Package {
          driver.findElement(By.id("fromdate")).click();
          sleep(5);
          
-         //driver.findElement(By.xpath("//*[@id=\"fromdate\"]/option[@value='" + currentDate + "']")).click();
          driver.findElement(By.id("fromdate")).sendKeys(currentDate);
-        // driver.findElement(By.id("fromdate")).sendKeys("currentDate");
-         //driver.findElement(By.linkText("26")).click();
+       
 
 
-    // driver.findElement(By.cssSelector("tr:nth-child(11) #uniform-undefined input")).click();
-    //  driver.findElement(By.cssSelector(".lucky_diprow #uniform-undefined input")).click();
      driver.findElement(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]")).click();
     driver.findElement(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]")).click();
 

@@ -73,5 +73,6 @@ public class Customerpurchase {
         JOptionPane.showMessageDialog(null, Massage, "Customer Purchase sucessfull", 0);
     }
 
+    
 
 }

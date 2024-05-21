@@ -36,8 +36,9 @@ public class Reference {
         JOptionPane.showMessageDialog(null, message, "Success", JOptionPane.INFORMATION_MESSAGE);
     }
        
-    public static void setupDriver() {
-        System.setProperty("webdriver.chrome.driver", "E:\\JavaP3\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
+    public static void setupDriver()
+     {
+        System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://lottosonline.thefamcomlab.com");
         driver.manage().window().maximize();
@@ -65,6 +66,7 @@ public class Reference {
         driver.findElement(By.id("submit_button")).click();
 
         sleep(5);
+    
     }
 
      public static void Saleslogin() {
