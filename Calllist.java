@@ -1,14 +1,17 @@
-
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;  
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -24,13 +27,21 @@ public class Calllist
         adminlogin();
         Navigatecalllist();
         creatcalllist();
-        sorting();
+        showSuccessPopup("Test Case 'Create Call List' completed successfully.");
         delete();
+        showSuccessPopup("Test Case 'Delete call list' completed successfully.");
         creatcalllist();
-        assignCallList(); 
+        assignCallList();
+        showSuccessPopup("Test Case 'Assign call list ' completed successfully."); 
         archivecallist();
+        showSuccessPopup("Test Case 'Archive call list ' completed successfully."); 
         impcalllist();
+        showSuccessPopup("Test Case 'upload CSV file to create call list ' completed successfully."); 
         delete();
+        showSuccessPopup("Test Case 'Delete call list which is created by upload CSV file to   ' completed successfully."); 
+        creatcalllist();
+        sorting();
+        showSuccessPopup("Test Case 'sorting list' completed successfully."); 
         //searchpanel();  
     } catch (Exception e) {
         Package.handleError(e);
@@ -42,7 +53,6 @@ public class Calllist
         }
     }  
     }
-    
     public static void Setdriver()
     {
          System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
@@ -59,6 +69,7 @@ public class Calllist
         driver.findElement(By.id("password")).sendKeys("famcom");
         driver.findElement(By.id("submit_button")).click();
         Reference.sleep(5);
+
     }    
 
     public static void clickAndWait(By locator, int seconds) 
@@ -71,7 +82,7 @@ public class Calllist
     {
         //driver.findElement(By.tagName(" Create Call  Lists ")).click();
         clickAndWait(By.xpath("//*[@id=\"menu\"]/li[5]/a"), 3);  
-        //Package.showSuccessPopup("Navigated successfully"); 
+         
 
     }
 
@@ -88,7 +99,7 @@ public class Calllist
         driver.findElement(By.id("max_records")).sendKeys("2");
         // Click and wait for the save button
         clickAndWait(By.id("save"), 2);
-       Package.showSuccessPopup("Call list Created Successfully");
+       //showSuccessPopup("Call list Created Successfully");
     }   
 
     public static void assignCallList() 
@@ -107,7 +118,7 @@ public class Calllist
 
         // Click the save button and wait using the helper method
         clickAndWait(By.id("saveAssign"), 3);
-        //Message("Call list Assign Successfully");
+        //showSuccessPopup("Call list Assign Successfully");
     }
 
     public static void archivecallist()
@@ -125,7 +136,7 @@ public class Calllist
             // Handle the case where the alert is not present
             System.out.println("No alert present.");
         }
-       // Message("Call list archive Successfully");
+        //showSuccessPopup("Call list archive Successfully");
     }
 
     public static void delete() {
@@ -143,7 +154,7 @@ public class Calllist
             // Handle the case where the alert is not present
             System.out.println("No alert present.");
         }
-       // Message("Call list Deleted Successfully");
+        //showSuccessPopup("Call list Deleted Successfully");
     }
 
     public static void sorting()
@@ -155,7 +166,7 @@ public class Calllist
         clickAndWait(By.xpath("//*[@id='dyntable']/thead/tr/th[6]/span[1]"), 3);
         clickAndWait(By.xpath("//*[@id='dyntable']/thead/tr/th[7]/span[1]"), 3);
         clickAndWait(By.xpath("//*[@id='dyntable']/thead/tr/th[8]/span[1]"), 3);
-        //Message("Sorting working properly on the list page");
+        showSuccessPopup("Sorting working properly on the list page");
     }
 
     public static void searchpanel()
@@ -196,7 +207,7 @@ public class Calllist
 
         // Click the save button
         clickAndWait(By.id("saveUploadcsv"), 3);
-        //Message("Call list Created Successfully by upload CSV file");
+        //showSuccessPopup("Call list Created Successfully by upload CSV file");
     }
 
     public static String generateUniqueCalllistName() 
@@ -205,9 +216,27 @@ public class Calllist
         return "Call List V" + dateFormat.format(new Date());
     }
 
-    public static void Message(String Message){
-        JOptionPane.showMessageDialog(null, driver, Message , 0);
-    }
+
+   public static void showSuccessPopup(String message) {
+    final JOptionPane optionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+    final JDialog dialog = optionPane.createDialog("Success");
+
+    Timer timer = new Timer(3000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dialog.dispose();
+        }
+    });
+    timer.setRepeats(false); // Ensure the timer only runs once
+    timer.start();
+
+    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    dialog.setVisible(true);
+}
+
+
+    
+    
 
 
 

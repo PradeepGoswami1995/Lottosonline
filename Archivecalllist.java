@@ -2,12 +2,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 //import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-public class Archivecalllist {
+
+
+
+public class Archivecalllist 
+{
     private static WebDriver driver;
    
     public static void main(String[] args) {
         driversetup();  
-        adminlogin(); 
+        adminlogin();
+        sorting(); 
         
     }
     public static void driversetup(){
@@ -30,8 +35,19 @@ public class Archivecalllist {
     {
        clickAndWait(By.xpath("//*[@id=\"menu\"]/li[5]/a"), 3); 
        clickAndWait(By.xpath("//a[text()='Archived Call Lists']"),2);
-       //*[@id="exTab1"]/ul/li[2]/a
 
+    }
+
+    public static void sorting()
+    {
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[3]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[5]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[6]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[7]/span[1]"), 2);
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[8]/span[1]"), 2);
+        Package.showSuccessPopup("Test ase 'List sorting'completed successfully ");
     }
     public static void clickAndWait(By locator, int seconds) 
     {

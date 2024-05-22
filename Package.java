@@ -1,20 +1,17 @@
-import org.openqa.selenium.WebDriver;             // Main interface to instantiate and manage browser instances
-import org.openqa.selenium.chrome.ChromeDriver;   // Specific WebDriver implementation for Google Chrome
-//import org.openqa.selenium.support.ui.ExpectedConditions;
-//import org.openqa.selenium.support.ui.Select;
-//import org.openqa.selenium.support.ui.WebDriverWait;
-//import org.openqa.selenium.support.ui.Select;
-import org.apache.commons.io.FileUtils;           // Utility class for IO operations (e.g., file copying)
-import org.openqa.selenium.By;                    // Class used to locate elements on the web page
-import org.openqa.selenium.OutputType;            // Enum defining the type of output for certain operations (like screenshot)
-import org.openqa.selenium.TakesScreenshot;       // Interface allowing WebDriver to capture screenshots
-import javax.swing.JOptionPane;                  // Class used for showing standard dialogs (like pop-up messages)
-import java.util.concurrent.TimeUnit;             // Enum defining time units (e.g., seconds, minutes)
-import java.io.File;                                  // Class representing file and directory path names
-import java.io.IOException;                       // Exception thrown when IO operations fail or are interrupted
-import java.text.SimpleDateFormat;                 // Class used to format dates into text and parse text into dates
-import java.util.Date;                            // Class representing a specific instant in time
-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import javax.swing.*;
+import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Package {
     private static WebDriver driver;
@@ -24,9 +21,9 @@ public class Package {
             setupDriver();
             adminlogin();
             navigatingpackage();
-           createPackage();
-           createpromopacage();
-           editPackage();
+            createPackage();
+            createpromopacage();
+            editPackage();
             sorting();
         } catch (Exception e) {
             handleError(e);
@@ -42,17 +39,25 @@ public class Package {
         takeScreenshot();
         JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     public static void showSuccessPopup(String message) {
-        JOptionPane.showMessageDialog(null, message, "Success", JOptionPane.INFORMATION_MESSAGE);
+        final JOptionPane optionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = optionPane.createDialog("Success");
+
+        Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        timer.setRepeats(false); // Ensure the timer only runs once
+        timer.start();
+
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
     }
-    
 
-    //... [Rest of your code remains unchanged]
-       
-
-    
-    public static void setupDriver() 
-    {
+    public static void setupDriver() {
         System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://lottosonline.thefamcomlab.com");
@@ -65,82 +70,52 @@ public class Package {
 
     public static void adminlogin() {
         clickAndWait(By.linkText("Login"), 3);
-        
         driver.findElement(By.id("email")).sendKeys("gopher@famcominc.com");
         driver.findElement(By.id("password")).sendKeys("FamComInc");
-        driver.findElement(By.id("submit_button")).click();
-
-        sleep(5);
+        clickAndWait(By.id("submit_button"), 2);
+        sleep(3);
     }
-    public static void navigatingpackage()
-    {
-        driver.findElement(By.xpath("//*[@id=\"menu\"]/li[3]/a")).click();
 
+    public static void navigatingpackage() {
+        clickAndWait(By.xpath("//*[@id=\"menu\"]/li[3]/a"), 2);
         sleep(5);
-
     }
 
     public static void createPackage() {
-       // driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div/a")).click();
-        driver.findElement(By.partialLinkText("Create Package")).click();
-       // driver.findElement(By.cssSelector("a.btn.btn-info[href='/admin/create_admin_packages.php']")).click();
-
-
-
+        clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
-
         driver.findElement(By.id("package_name")).sendKeys(uniquePackageName);
         driver.findElement(By.id("package_description")).sendKeys("Testing by Automation, Game + Jackpot pool");
-
-        driver.findElement(By.id("package_type")).click();
-        driver.findElement(By.xpath("//*[@id=\"package_type\"]/option[3]")).click();
+        clickAndWait(By.id("package_type"), 1);
+        clickAndWait(By.xpath("//*[@id=\"package_type\"]/option[3]"), 1);
         driver.findElement(By.id("package_price")).sendKeys("30");
-        
-
-        driver.findElement(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]")).click();
-    driver.findElement(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]")).click();
-
-        // driver.findElement(By.xpath("/html/body/div[2]/div[4]/div[2]/div/div/div/div/div/div/form/div[12]/div/div/table/tbody/tr[2]/td[1]/div/span/input")).click();
-        // driver.findElement(By.xpath("/html/body/div[2]/div[4]/div[2]/div/div/div/div/div/div/form/div[12]/div/div/table/tbody/tr[20]/td[1]/div")).click();
-        // driver.findElement(By.xpath("/html/body/div[2]/div[4]/div[2]/div/div/div/div/div/div/form/div[12]/div/div/table/tbody/tr[34]/td[1]/div/span/input")).click();
-        driver.findElement(By.id("savepkg")).click();
-
-
-        sleep(3);
-
+        clickAndWait(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]"), 1);
+        clickAndWait(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]"), 1);
+        clickAndWait(By.id("savepkg"), 3);
         takeScreenshot();
         showSuccessPopup("Package created successfully!");
     }
 
     public static void editPackage() {
-        //driver.findElement(By.xpath("//*[@id=\"dyntable\"]/tbody/tr[1]/td[11]/a/i")).click();
-        //driver.findElement(By.cssSelector("a[href='/admin/create_admin_packages.php?uid=130']")).click();
-        driver.findElement(By.cssSelector("a[href^='/admin/create_admin_packages.php?uid=']:first-of-type")).click();
-        sleep(5);
-
-        driver.findElement(By.id("savepkg")).click();
-        sleep(2);
+        clickAndWait(By.cssSelector("a[href^='/admin/create_admin_packages.php?uid=']:first-of-type"), 5);
+        clickAndWait(By.id("savepkg"), 2);
         System.out.println("Edit successfully");
         showSuccessPopup("Record Edited successfully!");
         takeScreenshot();
     }
 
-
     public static void takeScreenshot() {
         try {
             TakesScreenshot ts = (TakesScreenshot) driver;
             File screenshot = ts.getScreenshotAs(OutputType.FILE);
-    
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String timestamp = dateFormat.format(new Date());
             String fileName = "Package manager" + timestamp + ".png";
-    
             File destination = new File("D:\\Images\\" + fileName);
-            if(!destination.getParentFile().exists()){
-                destination.getParentFile().mkdirs();  // Ensure the directory exists
+            if (!destination.getParentFile().exists()) {
+                destination.getParentFile().mkdirs(); // Ensure the directory exists
             }
-    
             FileUtils.copyFile(screenshot, destination);
             System.out.println("Screenshot saved: " + destination.getAbsolutePath());
         } catch (IOException e) {
@@ -165,87 +140,42 @@ public class Package {
         }
     }
 
-    public static void sorting()
-    {
-       //Package Name 
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span")).click();
-     sleep(5);
-
-     takeScreenshot();
-     // Price 
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span")).click();
-     sleep(5);
-     takeScreenshot();
-
-     //Agent Name
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[7]/span")).click();
-     sleep(5);
-     takeScreenshot();
-
-     // AGent Location 
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[8]/span")).click();
-     sleep(5);
-
-     takeScreenshot();
-     // Status
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[9]/span")).click();
-     sleep(5);
-      takeScreenshot();
-
-// Create Date
-     driver.findElement(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[10]/span")).click();
-
-     sleep(5);
-      takeScreenshot();
-      showSuccessPopup("All columns have been sorted successfully!");
-
-
+    public static void sorting() {
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[7]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[8]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[9]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[10]/span"), 3);
+        takeScreenshot();
+        showSuccessPopup("All columns have been sorted successfully!");
     }
 
-    public static void createpromopacage()
-    {
-         // driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div/a")).click();
-        driver.findElement(By.partialLinkText("Create Package")).click();
-       // driver.findElement(By.cssSelector("a.btn.btn-info[href='/admin/create_admin_packages.php']")).click();
-
+    public static void createpromopacage() {
+        clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
-
         driver.findElement(By.id("package_name")).sendKeys(uniquePackageName);
         driver.findElement(By.id("package_description")).sendKeys("Testing by Automation, Game + Jackpot pool");
-
-        //Selecting the DDL 
-        driver.findElement(By.id("promo_package")).click(); // This opens the dropdown
-        driver.findElement(By.xpath("//*[@id=\"promo_package\"]/option[2]")).click(); // This selects the second option
+        clickAndWait(By.id("promo_package"), 1);
+        clickAndWait(By.xpath("//*[@id=\"promo_package\"]/option[2]"), 1);
         sleep(1);
-
         driver.findElement(By.id("promo_package_price")).sendKeys("50");
-
-         // Date setup
-         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
-         String currentDate = sdf.format(new Date());
-         System.out.println("Current Date: " + currentDate);  // Print the date for verification
- 
-         // Click the dropdown
-         driver.findElement(By.id("fromdate")).click();
-         sleep(5);
-         
-         driver.findElement(By.id("fromdate")).sendKeys(currentDate);
-       
-
-
-     driver.findElement(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]")).click();
-    driver.findElement(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]")).click();
-
-         
-         // Continue with the rest of your code
-         driver.findElement(By.id("savepkg")).click();
-         showSuccessPopup("Promo package created successfully!");
-         takeScreenshot();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(new Date());
+        System.out.println("Current Date: " + currentDate);
+        clickAndWait(By.id("fromdate"), 1);
+        sleep(5);
+        driver.findElement(By.id("fromdate")).sendKeys(currentDate);
+        clickAndWait(By.cssSelector("#gametbl > tbody > tr:nth-child(11) > td:nth-child(1) > input[type=checkbox]"), 1);
+        clickAndWait(By.cssSelector("#gametbl > tbody > tr.lucky_diprow > td:nth-child(1) > input[type=checkbox]"), 1);
+        clickAndWait(By.id("savepkg"), 3);
+        showSuccessPopup("Promo package created successfully!");
+        takeScreenshot();
     }
-
-        
-
-    }
-
-
+}
