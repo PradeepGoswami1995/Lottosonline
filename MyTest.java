@@ -11,14 +11,16 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.time.Duration;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 
-public class Calllist {
+public class MyTest {
     private static WebDriver driver;
 
     @BeforeClass

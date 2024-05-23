@@ -13,9 +13,18 @@ public class Opennewaccount {
     private static WebDriver driver;
 
     public static void main(String[] args) {
+        try{
         setDriver();
         openAccount();
         Package.showSuccessPopup("New Acccount created succesfully");
+
+    } catch (Exception e) {
+        Package.handleError(e);
+    } finally {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
     }
 
     public static void setDriver() 
