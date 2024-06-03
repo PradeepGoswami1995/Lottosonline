@@ -50,7 +50,8 @@ public class Packagev1 {
     }
 
     @Test(dependsOnMethods = "testCreatePackage")
-    public void testCreatePromoPackage() {
+    public void testCreatePromoPackage()
+     {
         try {
             createPromoPackage();
         } catch (Exception e) {
@@ -115,7 +116,8 @@ public class Packagev1 {
         sleep(5);
     }
 
-    public static void createPackage() {
+    public static void createPackage() 
+    {
         clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
@@ -131,7 +133,8 @@ public class Packagev1 {
         showSuccessPopup("Package created successfully!");
     }
 
-    public static void editPackage() {
+    public static void editPackage() 
+    {
         clickAndWait(By.cssSelector("a[href^='/admin/create_admin_packages.php?uid=']:first-of-type"), 5);
         clickAndWait(By.id("savepkg"), 2);
         System.out.println("Edit successfully");
@@ -139,7 +142,8 @@ public class Packagev1 {
         takeScreenshot();
     }
 
-    public static void createPromoPackage() {
+    public static void createPromoPackage() 
+    {
         clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
@@ -162,7 +166,8 @@ public class Packagev1 {
         takeScreenshot();
     }
 
-    public static void takeScreenshot() {
+    public static void takeScreenshot() 
+    {
         try {
             TakesScreenshot ts = (TakesScreenshot) driver;
             File screenshot = ts.getScreenshotAs(OutputType.FILE);
@@ -184,12 +189,14 @@ public class Packagev1 {
         }
     }
 
-    public static void clickAndWait(By locator, int seconds) {
+    public static void clickAndWait(By locator, int seconds) 
+    {
         driver.findElement(locator).click();
         sleep(seconds);
     }
 
-    public static void sleep(int seconds) {
+    public static void sleep(int seconds)
+     {
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
@@ -197,7 +204,8 @@ public class Packagev1 {
         }
     }
 
-    public static void sorting() {
+    public static void sorting() 
+    {
         clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span"), 3);
         takeScreenshot();
         clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span"), 3);

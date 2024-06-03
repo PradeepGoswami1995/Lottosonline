@@ -105,7 +105,8 @@ public class Package {
         takeScreenshot();
     }
 
-    public static void takeScreenshot() {
+    public static void takeScreenshot()
+    {
         try {
             TakesScreenshot ts = (TakesScreenshot) driver;
             File screenshot = ts.getScreenshotAs(OutputType.FILE);
@@ -118,10 +119,12 @@ public class Package {
             }
             FileUtils.copyFile(screenshot, destination);
             System.out.println("Screenshot saved: " + destination.getAbsolutePath());
-        } catch (IOException e) {
+        } catch (IOException e)
+         {
             System.err.println("Error saving the screenshot: " + e.getMessage());
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             System.err.println("Error taking the screenshot: " + e.getMessage());
             e.printStackTrace();
         }

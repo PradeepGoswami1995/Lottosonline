@@ -7,20 +7,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TransferToPM{
+public class TransferToPM
+{
     private static WebDriver driver;
 
     public static void main(String[] args) {
 
-        try {
-        
+        try {       
         Setdriver();
         openLottosSite();
         Adminlogin();
         AdminTransferPM();
         PMlogin();
-        
-
     } catch (Exception e) {
         Package.handleError(e);
     } finally {
@@ -38,8 +36,6 @@ public class TransferToPM{
         driver = new ChromeDriver();
 
     }
-
-
     
     public static void openLottosSite() {
         driver.get("https://lottosonline.thefamcomlab.com");
@@ -54,7 +50,6 @@ public class TransferToPM{
         driver.findElement(By.id("submit_button")).click();
        sleep(2);
     }
-
 
     public static void AdminTransferPM()
      {
@@ -97,8 +92,7 @@ public class TransferToPM{
         // Click on "Continue to Checkout"
         driver.findElement(By.xpath("//button[contains(text(), 'Continue to Checkout')]")).click();
          sleep(5);
-    
-       
+
          //driver.findElement(By.tagName("Transfer To PM")).click();
       // driver.findElement(By.xpath("//*[@id=\"submit_button\"]")).click();
        //driver.findElement(By.xpath("//*[@id='card_details_container']/div[2]/a[2]")).click();
@@ -112,11 +106,6 @@ public class TransferToPM{
         sleep(2);
         Message("Item transftered to Payment Manager");
         //purchase by PM
-
-
-        
-
-
     }
 
     public static void PMlogin()
@@ -131,18 +120,16 @@ public class TransferToPM{
             driver.findElement(By.xpath("//*[@id='home']/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[4]/a[1]")).click();
             driver.findElement(By.id("tarans_id")).sendKeys("asd123");
             driver.findElement(By.id("submit_button2")).click();
-
             sleep(2);
-            
             //Logout
             driver.findElement(By.xpath("//*[@id='home']/div[1]/div[2]/div/ul/li/a")).click();
-
             Message("Payment completed by Paymentmanager");
 
         }
 
 
-    public static void sleep(int seconds) {
+    public static void sleep(int seconds) 
+    {
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e){
