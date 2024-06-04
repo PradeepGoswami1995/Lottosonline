@@ -1,3 +1,5 @@
+import org.testng.annotations.*;
+import org.testng.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.apache.commons.io.FileUtils;
@@ -16,23 +18,38 @@ import java.awt.event.ActionListener;
 public class Package {
     private static WebDriver driver;
 
-    public static void main(String[] args) {
-        try {
-            setupDriver();
-            adminlogin();
-            navigatingpackage();
-            createPackage();
-            createpromopacage();
-            editPackage();
-            sorting();
-        } catch (Exception e) {
-            handleError(e);
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
+    @BeforeClass
+    public void setup() {
+        System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.get("https://lottosonline.thefamcomlab.com");
+        driver.manage().window().maximize();
+    }
+
+    @AfterClass
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
         }
     }
+
+    @Test
+    public void testCreatePackage() {
+        try {
+            adminLogin();
+            navigateToPackage();
+            createPackage();
+            createPromoPackage();
+            editPackage();
+            sorting();
+           
+        } catch (Exception e) {
+            handleError(e);
+            Assert.fail("Exception during create package: " + e.getMessage());
+        }
+    }
+
+
 
     public static void handleError(Exception e) {
         System.err.println("An error occurred: " + e.getMessage());
@@ -57,18 +74,7 @@ public class Package {
         dialog.setVisible(true);
     }
 
-    public static void setupDriver() {
-        System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("https://lottosonline.thefamcomlab.com");
-        driver.manage().window().maximize();
-    }
-
-    public static WebDriver getDriver() {
-        return driver;
-    }
-
-    public static void adminlogin() {
+    public static void adminLogin() {
         clickAndWait(By.linkText("Login"), 3);
         driver.findElement(By.id("email")).sendKeys("gopher@famcominc.com");
         driver.findElement(By.id("password")).sendKeys("FamComInc");
@@ -76,12 +82,13 @@ public class Package {
         sleep(3);
     }
 
-    public static void navigatingpackage() {
+    public static void navigateToPackage() {
         clickAndWait(By.xpath("//*[@id=\"menu\"]/li[3]/a"), 2);
         sleep(5);
     }
 
-    public static void createPackage() {
+    public static void createPackage() 
+    {
         clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
@@ -97,7 +104,8 @@ public class Package {
         showSuccessPopup("Package created successfully!");
     }
 
-    public static void editPackage() {
+    public static void editPackage() 
+    {
         clickAndWait(By.cssSelector("a[href^='/admin/create_admin_packages.php?uid=']:first-of-type"), 5);
         clickAndWait(By.id("savepkg"), 2);
         System.out.println("Edit successfully");
@@ -105,61 +113,8 @@ public class Package {
         takeScreenshot();
     }
 
-    public static void takeScreenshot()
+    public static void createPromoPackage() 
     {
-        try {
-            TakesScreenshot ts = (TakesScreenshot) driver;
-            File screenshot = ts.getScreenshotAs(OutputType.FILE);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            String timestamp = dateFormat.format(new Date());
-            String fileName = "Package manager" + timestamp + ".png";
-            File destination = new File("D:\\Images\\" + fileName);
-            if (!destination.getParentFile().exists()) {
-                destination.getParentFile().mkdirs(); // Ensure the directory exists
-            }
-            FileUtils.copyFile(screenshot, destination);
-            System.out.println("Screenshot saved: " + destination.getAbsolutePath());
-        } catch (IOException e)
-         {
-            System.err.println("Error saving the screenshot: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) 
-        {
-            System.err.println("Error taking the screenshot: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public static void clickAndWait(By locator, int seconds) {
-        driver.findElement(locator).click();
-        sleep(seconds);
-    }
-
-    public static void sleep(int seconds) {
-        try {
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void sorting() {
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span"), 3);
-        takeScreenshot();
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span"), 3);
-        takeScreenshot();
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[7]/span"), 3);
-        takeScreenshot();
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[8]/span"), 3);
-        takeScreenshot();
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[9]/span"), 3);
-        takeScreenshot();
-        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[10]/span"), 3);
-        takeScreenshot();
-        showSuccessPopup("All columns have been sorted successfully!");
-    }
-
-    public static void createpromopacage() {
         clickAndWait(By.partialLinkText("Create Package"), 2);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String uniquePackageName = "Package manager V" + dateFormat.format(new Date());
@@ -180,5 +135,60 @@ public class Package {
         clickAndWait(By.id("savepkg"), 3);
         showSuccessPopup("Promo package created successfully!");
         takeScreenshot();
+    }
+
+    public static void takeScreenshot() 
+    {
+        try {
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File screenshot = ts.getScreenshotAs(OutputType.FILE);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = dateFormat.format(new Date());
+            String fileName = "Package manager" + timestamp + ".png";
+            File destination = new File("D:\\Images\\" + fileName);
+            if (!destination.getParentFile().exists()) {
+                destination.getParentFile().mkdirs(); // Ensure the directory exists
+            }
+            FileUtils.copyFile(screenshot, destination);
+            System.out.println("Screenshot saved: " + destination.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Error saving the screenshot: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error taking the screenshot: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void clickAndWait(By locator, int seconds) 
+    {
+        driver.findElement(locator).click();
+        sleep(seconds);
+    }
+
+    public static void sleep(int seconds)
+     {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sorting() 
+    {
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[2]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[4]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[7]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[8]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[9]/span"), 3);
+        takeScreenshot();
+        clickAndWait(By.xpath("//*[@id=\"dyntable\"]/thead/tr/th[10]/span"), 3);
+        takeScreenshot();
+        showSuccessPopup("All columns have been sorted successfully!");
     }
 }

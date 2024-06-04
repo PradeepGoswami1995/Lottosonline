@@ -15,7 +15,7 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Packagev1 {
+public class Draft4 {
     private static WebDriver driver;
 
     @BeforeClass
@@ -33,52 +33,23 @@ public class Packagev1 {
         }
     }
 
-    @BeforeMethod
-    public void login() {
-        adminLogin();
-    }
-
     @Test
     public void testCreatePackage() {
         try {
+            adminLogin();
             navigateToPackage();
             createPackage();
+            createPromoPackage();
+            editPackage();
+            sorting();
+           
         } catch (Exception e) {
             handleError(e);
             Assert.fail("Exception during create package: " + e.getMessage());
         }
     }
 
-    @Test(dependsOnMethods = "testCreatePackage")
-    public void testCreatePromoPackage()
-     {
-        try {
-            createPromoPackage();
-        } catch (Exception e) {
-            handleError(e);
-            Assert.fail("Exception during create promo package: " + e.getMessage());
-        }
-    }
 
-    @Test(dependsOnMethods = "testCreatePromoPackage")
-    public void testEditPackage() {
-        try {
-            editPackage();
-        } catch (Exception e) {
-            handleError(e);
-            Assert.fail("Exception during edit package: " + e.getMessage());
-        }
-    }
-
-    @Test(dependsOnMethods = "testEditPackage")
-    public void testSorting() {
-        try {
-            sorting();
-        } catch (Exception e) {
-            handleError(e);
-            Assert.fail("Exception during sorting: " + e.getMessage());
-        }
-    }
 
     public static void handleError(Exception e) {
         System.err.println("An error occurred: " + e.getMessage());

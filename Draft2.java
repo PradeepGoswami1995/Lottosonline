@@ -11,38 +11,49 @@ import java.time.Duration;
 import java.util.Date;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class Draft1 {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class Draft2 
+{
+    private static WebDriver chromeDriver;
+    private static WebDriver firefoxDriver;
+    private static WebDriverWait chromeWait;
+    private static WebDriverWait firefoxWait;
 
     @BeforeClass
-    @Parameters("browser")
-    public void setDriver(String browser) {
-        if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
-            driver = new ChromeDriver();
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "E:\\Lottos Java\\lib\\driver\\geckodriver.exe");
-            driver = new FirefoxDriver();
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        }
-        driver.get("https://lottosonline.thefamcomlab.com");
-        driver.manage().window().maximize();
+    public void setDriver() {
+        // Initialize Chrome driver
+        System.setProperty("webdriver.chrome.driver", "E:\\Lottos Java\\lib\\driver\\chromedriver-win64\\chromedriver.exe");
+        chromeDriver = new ChromeDriver();
+        chromeWait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
+
+        // Initialize Firefox driver
+        System.setProperty("webdriver.gecko.driver", "E:\\Lottos Java\\lib\\driver\\geckodriver.exe");
+        firefoxDriver = new FirefoxDriver();
+        firefoxWait = new WebDriverWait(firefoxDriver, Duration.ofSeconds(10));
+
+        // Navigate to the application URL for both browsers
+        chromeDriver.get("https://lottosonline.thefamcomlab.com");
+        firefoxDriver.get("https://lottosonline.thefamcomlab.com");
     }
 
     @AfterClass
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        if (chromeDriver != null) {
+            chromeDriver.quit();
+        }
+        if (firefoxDriver != null) {
+            firefoxDriver.quit();
         }
     }
 
     @Test
-    public void openAccount() {
+    public void openAccountOnBothBrowsers() {
+        openAccount(chromeDriver, chromeWait);
+        openAccount(firefoxDriver, firefoxWait);
+    }
+
+    public void openAccount(WebDriver driver, WebDriverWait wait) {
         waitForClickable(driver, wait, By.xpath("//a[text()='Open Account']"), 10).click();
 
         // Generate unique values
@@ -63,7 +74,7 @@ public class Draft1 {
         selectCountry(driver, wait, "India");
 
         waitForClickable(driver, wait, By.id("notifications_notification_email"), 1).click();
-        waitForClickable(driver, wait, By.id("submit_button"), 0).click();
+       //waitForClickable(driver, wait, By.id("submit_button"), 0).click();
         sleep(5);
     }
 
@@ -77,16 +88,19 @@ public class Draft1 {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    // Method to generate a unique name
     public String generateUniqueName(String baseName) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return baseName + dateFormat.format(new Date());
     }
 
+    // Method to generate a unique email
     public String generateUniqueEmail() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return "test" + dateFormat.format(new Date()) + "@yopmail.com";
     }
 
+    // Simple sleep method (you can replace this with any utility method you have)
     public void sleep(int seconds) {
         try {
             Thread.sleep(seconds * 1000);

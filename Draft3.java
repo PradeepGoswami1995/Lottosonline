@@ -13,8 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TransferToCustomer 
-{
+public class Draft3 {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
